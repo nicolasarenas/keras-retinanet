@@ -100,7 +100,7 @@ def _get_detections(generator, model, score_threshold=0.05, max_detections=100, 
 
         if save_path is not None:
             draw_annotations(raw_image, generator.load_annotations(i), label_to_name=generator.label_to_name)
-            draw_detections(raw_image, image_boxes, image_scores, image_labels, label_to_name=generator.label_to_name)
+            draw_detections(raw_image, image_boxes, image_scores, image_labels, label_to_name=generator.label_to_name , score_threshold=score_threshold)
 
             cv2.imwrite(os.path.join(save_path, '{}.png'.format(i)), raw_image)
 
@@ -115,7 +115,8 @@ def _get_detections(generator, model, score_threshold=0.05, max_detections=100, 
                     y1 = image_boxes[j][1]
                     y2 = image_boxes[j][3]
                     score_label = image_scores[j]
-                    file_csv.write("%s,%s,%s,%s,%s,%s\n" %( label_name , x1 , x2, y1, y2 , '{0:.1f}'.format(score_label)))
+                    if (float(score_label >= score_threshold )):
+                        file_csv.write("%s,%s,%s,%s,%s,%s\n" %( label_name , x1 , x2, y1, y2 , '{0:.1f}'.format(score_label)))
                     j = j + 1
                 file_csv.close()
 
