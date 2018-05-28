@@ -99,6 +99,7 @@ def parse_args(args):
     parser.add_argument('--save-path',       help='Path for saving images with detections.')
     parser.add_argument('--image-min-side',  help='Rescale the image so the smallest side is min_side.', type=int, default=800)
     parser.add_argument('--image-max-side',  help='Rescale the image if the largest side is larger than max_side.', type=int, default=1333)
+    parser.add_argument('--save-csv',        help='Save detections also in csv format' , action='store_true')
 
     return parser.parse_args(args)
 
@@ -138,7 +139,8 @@ def main(args=None):
         iou_threshold=args.iou_threshold,
         score_threshold=args.score_threshold,
         max_detections=args.max_detections,
-        save_path=args.save_path
+        save_path=args.save_path,
+        save_csv=args.save_csv
     )
 
     # print evaluation
