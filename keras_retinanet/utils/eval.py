@@ -55,7 +55,7 @@ def _compute_ap(recall, precision):
     return ap
 
 
-def _get_detections(generator, model, score_threshold=0.05, max_detections=100, save_path=None):
+def _get_detections(generator, model, score_threshold=0.05, max_detections=100, save_path=None , save_csv=True):
     """ Get the detections from the model using the generator.
 
     The result is a list of lists such that the size is:
@@ -105,16 +105,18 @@ def _get_detections(generator, model, score_threshold=0.05, max_detections=100, 
             cv2.imwrite(os.path.join(save_path, '{}.png'.format(i)), raw_image)
 
             if (save_csv == True):
-                file_csv = open(os.path.join(save_path, '{}.png'),"w")
+                file_csv = open(os.path.join(save_path, '{}.csv'.format(i)),"w")
                 j = 0
-                for j in range(image_labels):
+                elements = len(image_boxes) - 1
+                while (j <= elements ):
                     label_name = generator.label_to_name(image_labels[j])
                     x1 = image_boxes[j][0]
                     x2 = image_boxes[j][2]
                     y1 = image_boxes[j][1]
                     y2 = image_boxes[j][3]
-                    score_label = "{0:.1f}".image_scores[j]
-                    file_csv.write("%s,%s,%s,%s,%s,%s" %( label_name , x1 , x2, y1, y2 score_label))
+                    score_label = image_scores[j]
+                    file_csv.write("%s,%s,%s,%s,%s,%s\n" %( label_name , x1 , x2, y1, y2 , '{0:.1f}'.format(score_label)))
+                    j = j + 1
                 file_csv.close()
 
         # copy detections to all_detections
