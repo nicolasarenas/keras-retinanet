@@ -105,7 +105,7 @@ def _get_detections(generator, model, score_threshold=0.05, max_detections=100, 
             cv2.imwrite(os.path.join(save_path, '{}.png'.format(i)), raw_image)
 
             if (save_csv == True):
-                file_csv = open(os.path.join(save_path, '{}.csv'.format(generator.image_filename(i))),"w")
+                file_csv = open(os.path.join(save_path,i,"-",'{}.csv'.format(generator.image_filename(i))),"w")
                 j = 0
                 elements = len(image_boxes) - 1
                 while (j <= elements ):
