@@ -160,7 +160,7 @@ class CSVGenerator(Generator):
         return os.path.join(self.base_dir, self.image_names[image_index])
 
     def image_filename(self, image_index):
-        return self.image_names[image_index]
+        return os.path.basename(self.image_names[image_index])
 
     def image_aspect_ratio(self, image_index):
         # PIL is fast for metadata
